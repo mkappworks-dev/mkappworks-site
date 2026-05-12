@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostPreview from '../../components/PostPreview.astro';
+import { getCollection } from 'astro:content';
+import { getMinutesRead } from '../../utils/reading-time';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
+---
+
+<BaseLayout title="Writing" description="Posts on system design, algorithms, and what I'm building.">
+  <div class="max-w-[680px] mx-auto px-6 py-12">
+    <div class="font-mono text-[11px] tracking-[2px] text-[var(--accent)] uppercase mb-4">
+      // writing
+    </div>
+    <h1 class="font-mono text-[28px] font-semibold text-[var(--text-primary)] tracking-tight mb-2">
+      Writing
+    </h1>
+    <p class="text-[15px] text-[var(--text-secondary)] mb-8">
+      Posts on system design, algorithms, and what I'm building.
+    </p>
+
+    <!-- Search -->
+    <input
+      id="blog-search"
+      type="search"
+      placeholder="Search posts..."
+      class="w-full mb-5 px-4 py-2.5 bg-[var(--surface)] border border-[var(--border)] rounded-lg font-mono text-[13px] text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:border-[var(--accent)] transition-colors"
+    />
+
+    <!-- Tag filter -->
+    {allTags.length > 0 && (
+      <div class="flex flex-wrap gap-1.5 mb-8" id="tag-filters">
+        <button
+          data-tag=""
+          class="tag-btn active font-mono text-[13px] px-2.5 py-0.5 rounded-md border border-[color:rgba(34,197,94,0.4)] bg-[var(--accent-subtle)] text-[var(--accent)] transition-all duration-150"
+        >
+          all
+        </button>
+        {allTags.map((tag) => (
+          <button
+            data-tag={tag}
+            class="tag-btn font-mono text-[13px] px-2.5 py-0.5 rounded-md border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all duration-150"
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
+    )}
+
+    <!-- Posts -->
+    <div id="post-list">
+      {posts.map((post) => (
+        <div
+          data-post-item
+          data-tags={post.data.tags.join(',')}
+          data-title={post.data.title.toLowerCase()}
+          data-description={post.data.description.toLowerCase()}
+        >
+          <PostPreview
+            slug={post.id}
+            title={post.data.title}
+            description={post.data.description}
+            date={post.data.date}
+            tags={post.data.tags}
+            minutesRead={getMinutesRead(post.body)}
+          />
+        </div>
+      ))}
+    </div>
+    <p id="empty-state" class="hidden font-mono text-[13px] text-[var(--text-tertiary)] mt-4">
+      No posts found.
+    </p>
+  </div>
+</BaseLayout>
+
+<script>
+  const search = document.getElementById('blog-search') as HTMLInputElement;
+  const btns = document.querySelectorAll<HTMLButtonElement>('.tag-btn');
+  const items = document.querySelectorAll<HTMLElement>('[data-post-item]');
+  const empty = document.getElementById('empty-state');
+
+  const activeClasses = ['border-[color:rgba(34,197,94,0.4)]', 'bg-[var(--accent-subtle)]', 'text-[var(--accent)]'];
+  const inactiveClasses = ['border-[var(--border)]', 'text-[var(--text-secondary)]'];
+
+  let currentTag = '';
+  let currentQuery = '';
+
+  function applyFilters() {
+    let visible = 0;
+    items.forEach((item) => {
+      const tags = (item.dataset.tags ?? '').split(',');
+      const title = item.dataset.title ?? '';
+      const desc = item.dataset.description ?? '';
+
+      const tagMatch = !currentTag || tags.includes(currentTag);
+      const queryMatch = !currentQuery || title.includes(currentQuery) || desc.includes(currentQuery);
+      const show = tagMatch && queryMatch;
+
+      item.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    if (empty) empty.classList.toggle('hidden', visible > 0);
+  }
+
+  btns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      currentTag = btn.dataset.tag ?? '';
+      btns.forEach((b) => {
+        const isActive = b.dataset.tag === currentTag;
+        activeClasses.forEach((c) => b.classList.toggle(c, isActive));
+        inactiveClasses.forEach((c) => b.classList.toggle(c, !isActive));
+      });
+      applyFilters();
+    });
+  });
+
+  search?.addEventListener('input', () => {
+    currentQuery = search.value.trim().toLowerCase();
+    applyFilters();
+  });
+</script>

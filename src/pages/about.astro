@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const stack = [
+  { label: 'languages', items: 'TypeScript, Go, Python, Dart, Java' },
+  { label: 'frontend',  items: 'Astro, ReactJS, SolidJS, Flutter, Tailwind' },
+  { label: 'backend',   items: 'NodeJS, Spring Boot, Postgres, Redis' },
+  { label: 'tools',     items: 'Git, Docker, GitHub Actions' },
+];
+
+const connect = [
+  { label: 'github',  href: 'https://github.com/mkappworks-dev' },
+  { label: 'x',       href: 'https://www.x.com/mkappworks' },
+  { label: 'discord', href: 'https://discord.gg/g2xKWJcF' },
+  { label: 'youtube', href: 'https://youtube.com/@mkappworks' },
+];
+---
+
+<BaseLayout title="About" description="About mkappworks.">
+  <div class="max-w-[680px] mx-auto px-6 py-12">
+    <div class="font-mono text-[11px] tracking-[2px] text-[var(--accent)] uppercase mb-4">
+      // about
+    </div>
+    <h1 class="font-mono text-[28px] font-semibold text-[var(--text-primary)] tracking-tight mb-8">
+      About
+    </h1>
+
+    <div class="text-[15px] text-[var(--text-secondary)] leading-[1.7] space-y-4 mb-10">
+      <p>
+        Developer building tools for the open web. I write about dev tooling, open source,
+        and the craft of shipping software.
+      </p>
+      <p>
+        My main focus is <a href="https://benchlabs.app" target="_blank" rel="noopener noreferrer" class="text-[var(--accent)] border-b border-[color:rgba(34,197,94,0.4)] hover:opacity-80 transition-opacity">BenchLabs</a>.
+        Most of what I build is open source. The blog has the long-form thinking; GitHub has the code.
+      </p>
+    </div>
+
+    <!-- Stack -->
+    <div class="font-mono text-[11px] tracking-[2px] text-[var(--accent)] uppercase mb-4">
+      // stack
+    </div>
+    <dl class="stack-list font-mono text-[13px] mb-12 grid gap-y-1.5 gap-x-3">
+      {stack.map((row) => (
+        <>
+          <dt class="text-[var(--accent)]">{row.label}</dt>
+          <dd class="text-[var(--text-secondary)] m-0" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>{row.items}</dd>
+        </>
+      ))}
+    </dl>
+
+    <!-- Connect -->
+    <div class="font-mono text-[11px] tracking-[2px] text-[var(--accent)] uppercase mb-4">
+      // connect
+    </div>
+    <div class="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[14px]">
+      {connect.map(({ label, href }) => (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[var(--accent)] hover:opacity-80 transition-opacity"
+        >
+          {label} ↗
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .stack-list {
+    grid-template-columns: 100px 1fr;
+  }
+  @media (max-width: 480px) {
+    .stack-list {
+      grid-template-columns: 1fr;
+    }
+    .stack-list dt { margin-top: 0.5rem; }
+    .stack-list dt:first-child { margin-top: 0; }
+  }
+</style>
