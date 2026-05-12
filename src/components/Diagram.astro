@@ -1,0 +1,57 @@
+---
+interface Props {
+  code: string;
+  caption?: string;
+}
+const { code, caption } = Astro.props;
+
+const id = `diagram-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<figure class="diagram-figure">
+  <div class="diagram-body" id={id} data-code={code}></div>
+  {caption && (
+    <figcaption class="diagram-caption">{caption}</figcaption>
+  )}
+</figure>
+
+<script>
+  import mermaid from 'mermaid';
+
+  function getTheme() {
+    return document.documentElement.getAttribute('data-theme') === 'dark'
+      ? 'dark'
+      : 'neutral';
+  }
+
+  async function renderDiagrams() {
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: getTheme(),
+      fontFamily: 'JetBrains Mono, monospace',
+      fontSize: 13,
+    });
+
+    const els = document.querySelectorAll<HTMLElement>('.diagram-body[data-code]');
+    for (const el of els) {
+      const code = el.dataset.code?.trim();
+      if (!code) continue;
+      try {
+        const { svg } = await mermaid.render(`mermaid-${el.id}`, code);
+        el.insertAdjacentHTML('afterbegin', svg);
+      } catch (e) {
+        console.error('Mermaid render error:', e);
+      }
+    }
+  }
+
+  renderDiagrams();
+
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    document.querySelectorAll<HTMLElement>('.diagram-body').forEach(el => {
+      const svgEl = el.querySelector('svg');
+      if (svgEl) svgEl.remove();
+    });
+    setTimeout(renderDiagrams, 50);
+  });
+</script>

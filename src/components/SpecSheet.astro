@@ -1,0 +1,39 @@
+---
+interface Row {
+  label: string;
+  /** Plain string, or HTML rendered via set:html */
+  html?: string;
+  text?: string;
+}
+
+interface Props {
+  rows: Row[];
+}
+
+const { rows } = Astro.props;
+---
+
+<dl class="spec-sheet border border-[var(--border)] rounded-md p-4 grid gap-y-2 gap-x-4">
+  {rows.map((row) => (
+    <>
+      <dt class="font-mono text-[12px] text-[var(--text-tertiary)] tracking-wide">{row.label}</dt>
+      <dd class="font-mono text-[13px] text-[var(--text-primary)] m-0">
+        {row.html ? <span set:html={row.html} /> : row.text}
+      </dd>
+    </>
+  ))}
+</dl>
+
+<style>
+  .spec-sheet {
+    grid-template-columns: 80px 1fr;
+  }
+  @media (max-width: 480px) {
+    .spec-sheet {
+      grid-template-columns: 1fr;
+      gap-y: 0.5rem;
+    }
+    .spec-sheet dt { margin-top: 0.5rem; }
+    .spec-sheet dt:first-child { margin-top: 0; }
+  }
+</style>
