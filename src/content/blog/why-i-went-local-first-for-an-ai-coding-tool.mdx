@@ -6,7 +6,9 @@ tags: [local-first, code-bench, agents]
 draft: false
 ---
 
-I started Code Bench because I wanted to run a coding agent the same way I run a text editor. Double-click an icon. The thing opens. It already knows about my projects. There's no tab, no login redirect, no "your trial expires in 4 days," and crucially nothing in the loop between me and the model that I haven't put there on purpose.
+import PostCTA from '../../components/PostCTA.astro';
+
+I started [Code Bench](https://mkappworks.com/projects/code-bench) because I wanted to run a coding agent the same way I run a text editor. Double-click an icon. The thing opens. It already knows about my projects. There's no tab, no login redirect, no "your trial expires in 4 days," and crucially nothing in the loop between me and the model that I haven't put there on purpose.
 
 The first commit in the repo is `chore: initialize project with Flutter desktop config and tooling`, dated 2026-03-15. Nothing about that commit is interesting except that the target was desktop. No web. No mobile. That single decision is what set up every interesting trade-off later.
 
@@ -78,3 +80,5 @@ Running sandbox-off has a cost: the app runs with the user's full privileges, an
 The thing I keep coming back to: local-first is easy to advocate for when you're the only user of the thing. The minute you imagine a team using it, things get harder. Shared chat history. Shared project setup. Shared model preferences. A team-shaped Code Bench would need a sync layer, and a sync layer is a server, and a server is the thing I started this project to avoid being beholden to. I don't have an answer there yet.
 
 For now, I get to open a window, point it at a folder, and trust the loop. That was the goal.
+
+<PostCTA href="https://mkappworks.com/projects/code-bench">code bench ↗</PostCTA>
