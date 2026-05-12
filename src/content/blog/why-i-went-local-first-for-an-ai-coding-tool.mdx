@@ -1,0 +1,80 @@
+---
+title: Why I Went Local-First for an AI Coding Tool
+description: The frustrations that pushed me past hosted coding agents, and the trade-offs I picked up in exchange.
+date: 2026-05-12
+tags: [local-first, code-bench, agents]
+draft: false
+---
+
+I started Code Bench because I wanted to run a coding agent the same way I run a text editor. Double-click an icon. The thing opens. It already knows about my projects. There's no tab, no login redirect, no "your trial expires in 4 days," and crucially nothing in the loop between me and the model that I haven't put there on purpose.
+
+The first commit in the repo is `chore: initialize project with Flutter desktop config and tooling`, dated 2026-03-15. Nothing about that commit is interesting except that the target was desktop. No web. No mobile. That single decision is what set up every interesting trade-off later.
+
+The obvious pitch for local-first is privacy, and that's roughly half right. When I'm pasting production code from someone else's company into a black box whose retention policy I can't explain in a sentence, the tool has stopped being a tool and started being a liability I can't price. Running the agent on my machine, against models I've chosen, with secrets in my OS keychain, is the version where I can answer the retention question in one word.
+
+Latency is the less obvious half. Most of my time in a coding agent isn't waiting for the model to think; it's waiting for the _shell around_ the model. File reads, project context, tool calls, diff rendering: when all of that happens on disk a foot away from my CPU, the interaction has a different feel. The model is the slow part again. That's how it should be.
+
+Control is the one I underrated. In Code Bench, `lib/data/ai/datasource/` has both `*_dio.dart` files (OpenAI, Anthropic, Gemini, Ollama, custom OpenAI-compatible) and `*_process.dart` files (`claude_cli_datasource_process.dart`, `codex_cli_datasource_process.dart`). The same agent loop can route through a hosted frontier model or shell out to a CLI you already trust. The choice is per-session.
+
+```dart title="ai_service.dart"
+@Riverpod(keepAlive: true)
+Future<AIService> aiService(Ref ref) async {
+  final repo = await ref.watch(aiRepositoryProvider.future);
+  return AIService(repo: repo, streaming: repo);
+}
+```
+
+Nothing in the agent loop knows whether it's talking to a REST endpoint, a subprocess streaming JSONL, or, if you point it at Ollama, a model running on the same machine. I didn't plan it that way. It just fell out of treating the transport as a datasource concern. The UI doesn't get to care.
+
+## What it costs you
+
+The bill is real, and every local-first pitch I've read elides it.
+
+If your API key is rate-limited, the app is rate-limited. If you want to run fully offline through Ollama, you're picking from the open-weights tier — good, but not frontier. Code Bench can route to a frontier model the second you paste a key in, but a key is a key, and at that point the privacy story is about _who you trust_, not _whether anyone is in the loop_.
+
+The released binary is macOS-only right now. Windows and Linux targets compile but aren't signed, aren't released, and aren't on CI. I wrote that into the README as a disclosure, not a disclaimer:
+
+> Use at your own risk and expect to fix things.
+
+A web app wouldn't have this problem. A web app has other problems.
+
+Everything lives in a local SQLite database via Drift: `code_bench.db` on your disk, full stop. Sessions don't sync. There's no "open this conversation on your other machine." Secrets are in your OS keychain via `flutter_secure_storage`, not a cloud vault. If you want any of that, you build it. I haven't, because the moment I add a sync server I've reinvented the thing I was trying to leave behind.
+
+## Why desktop, not localhost
+
+The obvious shortcut for a local-first coding tool is: ship a binary that runs a local web server, open the browser to `localhost:something`, ship the UI as a React app. I looked at it. I didn't pick it.
+
+The reason is in `main.dart`:
+
+```dart title="main.dart"
+if (PlatformUtils.isDesktop) {
+  await windowManager.ensureInitialized();
+  await windowManager.waitUntilReadyToShow(
+    WindowOptions(
+      size: const Size(AppConstants.minWindowWidth + 200, AppConstants.minWindowHeight + 100),
+      minimumSize: const Size(AppConstants.minWindowWidth, AppConstants.minWindowHeight),
+      center: true,
+      titleBarStyle: TitleBarStyle.hidden,
+      title: AppConstants.appName,
+    ),
+    () async {
+      await windowManager.show();
+      await windowManager.focus();
+    },
+  );
+}
+```
+
+A real window. A hidden title bar. A native size negotiation with the OS. The UX of an agent that lives in a _window_ is different from one that lives in a tab. You can `cmd-tab` to it. macOS owns the lifecycle. You don't get logged out of it. The keychain integration is direct, not behind an origin policy.
+
+Code Bench shells out to `git`, to `code`, to `cursor`, to user-defined commands. The macOS App Sandbox makes that impossible, and I made that explicit in `macos/Runner/README.md`:
+
+> Both `DebugProfile.entitlements` and `Release.entitlements` set `com.apple.security.app-sandbox` to `false`. This is **deliberate** and required by the feature set.
+
+Browsers don't have a sandbox-off mode. They _are_ the sandbox. Putting a coding agent inside one means inventing a privileged helper sidecar, and at that point you've built two apps and the user has to install both. I built one.
+
+Running sandbox-off has a cost: the app runs with the user's full privileges, and a command-injection bug has the blast radius of "anything you can do in a terminal." That's a threat model I'm willing to own. Pretending an agent that runs `bash` is somehow safe behind a browser origin policy would have been worse.
+
+The thing I keep coming back to: local-first is easy to advocate for when you're the only user of the thing. The minute you imagine a team using it, things get harder. Shared chat history. Shared project setup. Shared model preferences. A team-shaped Code Bench would need a sync layer, and a sync layer is a server, and a server is the thing I started this project to avoid being beholden to. I don't have an answer there yet.
+
+For now, I get to open a window, point it at a folder, and trust the loop. That was the goal.
