@@ -15,6 +15,10 @@ Personal site for [mkappworks.com](https://mkappworks.com). Built with Astro 6.
 | `@fontsource/jetbrains-mono`   | Self-hosted JetBrains Mono             |
 | Shiki                          | Syntax highlighting (built into Astro) |
 
+## Requirements
+
+Node 22.12.0 or later.
+
 ## Commands
 
 | Command           | Action                           |
@@ -49,25 +53,31 @@ Create a `.mdx` file in `src/content/blog/` with this frontmatter:
 title: Your Post Title
 description: One-sentence summary shown in previews and meta tags.
 date: YYYY-MM-DD
-tags: [system-design, battleboard]
+tags: [local-first, agents]
 draft: false
 ---
 ```
 
 ### Code blocks
 
-Every code block **must** include a `title` with a real filename:
+Every code block must include a `title` with a real filename matching the language's convention:
+
+| Language           | Convention        | Example                   |
+| ------------------ | ----------------- | ------------------------- |
+| TypeScript         | `kebab-case.ts`   | `consistent-hash-ring.ts` |
+| TypeScript (React) | `PascalCase.tsx`  | `ProjectCard.tsx`         |
+| Dart               | `snake_case.dart` | `agent_runtime.dart`      |
+| Python             | `snake_case.py`   | `cache_eviction.py`       |
+| Go                 | `snake_case.go`   | `hash_ring.go`            |
+| Shell              | `kebab-case.sh`   | `deploy.sh`               |
+
+Syntax:
 
 ````md
 ```ts title="consistent-hash-ring.ts"
 // code here
 ```
 ````
-
-````
-
-The filename is displayed in the code block header bar alongside the file type badge.
-See `CLAUDE.md` for filename conventions per language.
 
 ## Adding a project
 
@@ -79,10 +89,13 @@ name: Project Name
 description: One-line description.
 status: live | beta | wip
 tags: [oss, infra]
-github: https://github.com/mkappworks/project
-url: https://project.com          # optional
+github: https://github.com/you/project # omit for closed-source projects
+url: https://project.com # optional
 benchlabsApp: false
 ---
-
 Long-form description shown on the project detail page.
-````
+```
+
+## License
+
+MIT — see [LICENSE](./LICENSE).
