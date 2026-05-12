@@ -1,0 +1,205 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  tags: string[];
+  minutesRead?: number;
+  prev?: { slug: string; title: string } | null;
+  next?: { slug: string; title: string } | null;
+}
+
+const { title, description, date, tags, minutesRead, prev, next } = Astro.props;
+
+const dateStr = date.toLocaleDateString('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+});
+---
+
+<BaseLayout {title} {description} type="article" {date}>
+  <article class="max-w-[680px] mx-auto px-6 py-12">
+    <!-- Back -->
+    <a
+      href="/blog"
+      class="inline-flex items-center gap-1 text-[13px] font-mono text-[var(--text-tertiary)] hover:text-[var(--accent)] transition-colors mb-10"
+    >
+      ← back to writing
+    </a>
+
+    <!-- Header -->
+    <header class="mb-10 pb-6 border-b border-[var(--border-subtle)]">
+      <h1 class="font-mono text-[28px] font-semibold text-[var(--text-primary)] tracking-tight leading-[1.25] mb-4">
+        {title}
+      </h1>
+      <div class="flex flex-wrap items-center gap-x-2 gap-y-1.5 font-mono text-[13px] text-[var(--text-tertiary)]">
+        <time datetime={date.toISOString()}>{dateStr}</time>
+        {minutesRead && <><span>·</span><span>{minutesRead} min</span></>}
+        {tags.length > 0 && <span>·</span>}
+        <div class="flex flex-wrap gap-1.5">
+          {tags.map((tag) => (
+            <span class="text-[12px] bg-[var(--surface)] text-[var(--text-tertiary)] px-2 py-0.5 rounded">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </header>
+
+    <!-- Body -->
+    <div class="prose">
+      <slot />
+    </div>
+
+    <!-- Prev / Next -->
+    {(prev || next) && (
+      <nav class="mt-16 pt-8 border-t border-[var(--border-subtle)] grid grid-cols-2 gap-6">
+        <div>
+          {prev && (
+            <a href={`/blog/${prev.slug}`} class="group block">
+              <div class="font-mono text-[12px] text-[var(--text-tertiary)] mb-1">← older</div>
+              <div class="text-[14px] text-[var(--text-secondary)] group-hover:text-[var(--accent)] transition-colors leading-snug">
+                {prev.title}
+              </div>
+            </a>
+          )}
+        </div>
+        <div class="text-right">
+          {next && (
+            <a href={`/blog/${next.slug}`} class="group block">
+              <div class="font-mono text-[12px] text-[var(--text-tertiary)] mb-1">newer →</div>
+              <div class="text-[14px] text-[var(--text-secondary)] group-hover:text-[var(--accent)] transition-colors leading-snug">
+                {next.title}
+              </div>
+            </a>
+          )}
+        </div>
+      </nav>
+    )}
+  </article>
+</BaseLayout>
+
+<script>
+  // ── File-type icon paths (SVG viewBox="0 0 16 16") ──────────────────
+  const ICONS: Record<string, { path: string; color: string }> = {
+    ts:         { color: '#3178c6', path: 'M1 1h14v14H1zm7.5 10.5v-5h2V5.5h-5.5V6.5h2v5z' },
+    tsx:        { color: '#3178c6', path: 'M1 1h14v14H1zm7.5 10.5v-5h2V5.5h-5.5V6.5h2v5z' },
+    js:         { color: '#f7df1e', path: 'M1 1h14v14H1zm8 9.5c0 1.4-.7 2-1.8 2-1 0-1.6-.5-1.9-1.2l1-.6c.2.4.4.6.8.6.4 0 .6-.2.6-.8V7.5H9zm2.5-.2c.2.5.6.8 1.1.8.5 0 .7-.2.7-.5 0-.4-.3-.5-.9-.7l-.3-.1c-.9-.4-1.5-.8-1.5-1.8 0-.9.7-1.6 1.8-1.6.8 0 1.3.3 1.7.9l-1 .6c-.2-.3-.4-.5-.7-.5-.3 0-.5.2-.5.4 0 .3.2.4.7.6l.3.1c1.1.5 1.7.9 1.7 1.9 0 1.1-.9 1.7-2 1.7-1.1 0-1.8-.5-2.2-1.3z' },
+    jsx:        { color: '#61dafb', path: 'M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM8 2C4.5 2 2 4.9 2 8s2.5 6 6 6 6-2.9 6-6-2.5-6-6-6zm0 1c.6 0 1.4.7 2 2H6c.6-1.3 1.4-2 2-2zM4 8c0-.6.1-1.1.2-1.6L5.4 7c-.1.3-.1.7-.1 1s0 .7.1 1L4.2 9.6C4.1 9.1 4 8.6 4 8zm2 3c-.6-1.3-1.4-2-2-2h4c-.6 1.3-1.4 2-2 2zm4 0c.6-1.3 1.4-2 2-2-.6 1.3-1.4 2-2 2zm1.8-1.4L10.6 9c.1-.3.1-.7.1-1s0-.7-.1-1l1.2-.6c.1.5.2 1 .2 1.6s-.1 1.1-.2 1.6z' },
+    py:         { color: '#3776ab', path: 'M7.5 1C4.5 1 4 2.5 4 4v1h3.5V6H3C1.5 6 1 7 1 8.5v2C1 12 2 13 3.5 13H5v-1.5c0-1.5 1-2.5 2.5-2.5h3c1.5 0 2.5-1 2.5-2.5v-3C13 2 12 1 7.5 1zM6 3.5A.75.75 0 1 1 6 5a.75.75 0 0 1 0-1.5zm2.5 9.5H5v-1.5c0-1.5 1-2.5 2.5-2.5h3c1.5 0 2.5 1 2.5 2.5V13c0 1.5-1 2-3.5 2H8.5c-1.5 0-2.5-1-2.5-2.5V11h3.5v-1h1.5c1.5 0 2 .5 2 1.5v2c0 1.5-1 2.5-2.5 2.5zm2 1.5a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5z' },
+    go:         { color: '#00add8', path: 'M2 9.5C2 6.5 4 4 8 4s6 2.5 6 5.5c0 2.5-1.5 4.5-4 5l-.5-1.5c1.5-.4 3-1.5 3-3.5 0-2-1.5-3.5-4.5-3.5S3.5 7.5 3.5 9.5c0 2 1.5 3.1 3 3.5L6 14.5C3.5 14 2 12 2 9.5zm4 .5h4v1.5H6z' },
+    rs:         { color: '#ce422b', path: 'M8 1l1.5 3h3l-2.5 2 1 3L8 7.5 5 9l1-3L3.5 4h3z' },
+    dart:       { color: '#0175c2', path: 'M2 2l4 .5L13 9l-4.5 5L3 13l-.5-5.5zM5 5.5a1 1 0 1 0 2 0 1 1 0 0 0-2 0z' },
+    md:         { color: '#555', path: 'M2 4h12v8H2zm1.5 5.5V6.5l1.5 2 1.5-2v3h1V6H6L4.5 8 3 6H1.5v3.5zm7-1L9 7H8v2.5h1V8l1 1.5 1-1.5v1.5h1V7h-1z' },
+    mdx:        { color: '#f9ac00', path: 'M2 4h12v8H2zm1.5 5.5V6.5l1.5 2 1.5-2v3h1V6H6L4.5 8 3 6H1.5v3.5zm7-1L9 7H8v2.5h1V8l1 1.5 1-1.5v1.5h1V7h-1z' },
+    json:       { color: '#cbcb41', path: 'M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2zm0 2c.7 0 1.3.5 1.3 1.2S8.7 6.4 8 6.4s-1.3-.5-1.3-1.2S7.3 4 8 4zm0 7.5c-1.8 0-3.3-.9-3.3-2 0-.6.5-1.1 1.2-1.5C6.4 7.6 7.2 7.4 8 7.4s1.6.2 2.1.6c.7.4 1.2.9 1.2 1.5 0 1.1-1.5 2-3.3 2z' },
+    yaml:       { color: '#cb171e', path: 'M3 4h1.5v3L8 4l3.5 3V4H13v8h-1.5V9L8 12 4.5 9v3H3z' },
+    css:        { color: '#264de4', path: 'M3 2l1 10 4 1.5L12 12l1-10zm4 7.5L5.5 9l-.2-2H10l-.2 1.5-1.8.5zm.4-4H5.2l-.1-1.5h5.8l-.5 4.5H7z' },
+    html:       { color: '#e44d26', path: 'M3 2l1 10 4 1.5L12 12l1-10zm4 7.5L5.5 9l-.2-2H10l-.2 1.5-1.8.5zm.4-4H5.2l-.1-1.5h5.8l-.5 4.5H7z' },
+    sh:         { color: '#4eaa25', path: 'M2 3h12v10H2zm1.5 2.5 3 2-3 2m3.5 1h3' },
+    bash:       { color: '#4eaa25', path: 'M2 3h12v10H2zm1.5 2.5 3 2-3 2m3.5 1h3' },
+    sql:        { color: '#e97b00', path: 'M8 2C5 2 3 3.5 3 5.5S5 9 8 9s5-1.5 5-3.5S11 2 8 2zm0 8.5c-2.5 0-5-.8-5-2v1.5c0 2 2 3.5 5 3.5s5-1.5 5-3.5V8.5c0 1.2-2.5 2-5 2z' },
+    astro:      { color: '#ff5d01', path: 'M8 1 5 12l3-2 3 2zm0 3L6.5 10l1.5-1 1.5 1z' },
+  };
+
+  const COPY_PATH  = 'M5 3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V7l-4-4H5zm4 0v3h3M7 9h2m-2 2h4';
+  const CHECK_PATH = 'M2 8l4 4 8-8';
+
+  function makeSvg(pathD: string, color = 'currentColor', size = 14): SVGSVGElement {
+    const ns = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 16 16');
+    svg.setAttribute('width', String(size));
+    svg.setAttribute('height', String(size));
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', color);
+    svg.setAttribute('stroke-width', '1.5');
+    svg.setAttribute('stroke-linecap', 'round');
+    svg.setAttribute('stroke-linejoin', 'round');
+    const path = document.createElementNS(ns, 'path');
+    path.setAttribute('d', pathD);
+    svg.appendChild(path);
+    return svg;
+  }
+
+  document.querySelectorAll<HTMLElement>('.prose pre').forEach((pre) => {
+    const title = pre.getAttribute('data-title') ?? '';
+    const lang  = pre.getAttribute('data-lang')  ?? '';
+    const ext   = title.includes('.') ? title.split('.').pop()! : lang;
+    const icon  = ICONS[ext] ?? ICONS[lang] ?? null;
+
+    // Wrap
+    const wrapper = document.createElement('div');
+    wrapper.className = 'code-block';
+    pre.parentNode!.insertBefore(wrapper, pre);
+    wrapper.appendChild(pre);
+
+    // Title bar
+    const bar = document.createElement('div');
+    bar.className = 'code-title';
+
+    // Left: file icon + filename
+    const left = document.createElement('span');
+    left.className = 'code-title-left';
+
+    if (icon) {
+      const iconWrap = document.createElement('span');
+      iconWrap.className = 'code-file-icon';
+      // filled rect icon: use a simple colored SVG
+      const ns = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(ns, 'svg');
+      svg.setAttribute('viewBox', '0 0 16 16');
+      svg.setAttribute('width', '13');
+      svg.setAttribute('height', '13');
+      const rect = document.createElementNS(ns, 'rect');
+      rect.setAttribute('width', '16');
+      rect.setAttribute('height', '16');
+      rect.setAttribute('rx', '3');
+      rect.setAttribute('fill', icon.color);
+      const txt = document.createElementNS(ns, 'text');
+      txt.setAttribute('x', '8');
+      txt.setAttribute('y', '12');
+      txt.setAttribute('text-anchor', 'middle');
+      txt.setAttribute('font-size', '7');
+      txt.setAttribute('font-family', 'monospace');
+      txt.setAttribute('font-weight', 'bold');
+      txt.setAttribute('fill', '#fff');
+      txt.textContent = ext.slice(0, 2).toUpperCase();
+      svg.appendChild(rect);
+      svg.appendChild(txt);
+      iconWrap.appendChild(svg);
+      left.appendChild(iconWrap);
+    }
+
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'code-title-name';
+    nameSpan.textContent = title || lang;
+    left.appendChild(nameSpan);
+    bar.appendChild(left);
+
+    wrapper.insertBefore(bar, pre);
+
+    // Right: copy icon button (inside bar)
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'copy-btn';
+    copyBtn.setAttribute('aria-label', 'Copy code');
+    const copyIcon = makeSvg(COPY_PATH, 'currentColor', 14);
+    copyBtn.appendChild(copyIcon);
+    bar.appendChild(copyBtn);
+
+    copyBtn.addEventListener('click', async () => {
+      const code = pre.querySelector('code')?.innerText ?? pre.innerText;
+      await navigator.clipboard.writeText(code);
+      // swap to check icon
+      copyBtn.replaceChildren(makeSvg(CHECK_PATH, 'currentColor', 14));
+      copyBtn.classList.add('copied');
+      setTimeout(() => {
+        copyBtn.replaceChildren(makeSvg(COPY_PATH, 'currentColor', 14));
+        copyBtn.classList.remove('copied');
+      }, 2000);
+    });
+  });
+</script>

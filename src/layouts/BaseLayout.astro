@@ -1,0 +1,36 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type?: 'website' | 'article';
+  date?: Date;
+}
+
+const { title, description, image, type, date } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <script is:inline>
+      // Dark default. ThemeToggle can override and persist to localStorage.
+      const stored = localStorage.getItem('theme');
+      const theme = stored ?? 'dark';
+      if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    </script>
+    <BaseHead {title} {description} {image} {type} {date} />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Nav />
+    <main class="page-enter flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
