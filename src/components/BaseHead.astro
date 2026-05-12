@@ -18,7 +18,7 @@ const {
 const siteUrl = 'https://mkappworks.com';
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 const ogImage = new URL(image, siteUrl).href;
-const fullTitle = title === 'mk' ? 'mk — mkappworks' : `${title} — mkappworks`;
+const fullTitle = `${title} — mkappworks`;
 ---
 
 <meta charset="utf-8" />
