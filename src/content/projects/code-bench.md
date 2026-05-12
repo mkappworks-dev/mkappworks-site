@@ -10,8 +10,8 @@ icon: /code_bench_app_icon.png
 benchlabsApp: true
 ---
 
-Code Bench is a local-first AI coding tool built around your existing workflow. Git-native from the ground up — work across branches, review diffs, and commit without leaving the app.
+Code Bench is a local-first AI coding tool. Git-native — branches, diffs, and commits are first-class, not an afterthought.
 
-Extend it with MCP servers to connect to any tool, API, or data source. The agentic runtime lets models plan and execute multi-step tasks on your codebase while keeping everything on your machine.
+Extend it with MCP servers to connect to any tool or data source. The agent runtime runs multi-step tasks on your codebase while keeping everything on your machine.
 
 Part of the Benchlabs suite of open source developer tools.

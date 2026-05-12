@@ -8,8 +8,8 @@ github: https://github.com/mkappworks-dev
 benchlabsApp: true
 ---
 
-Chat Bench is a local-first AI chat workspace that runs entirely on your machine. No data leaves your device — conversations are private by default.
+Chat Bench is a local-first AI chat workspace. Conversations stay on your machine — no accounts, no sync, no retention policy to read.
 
-Use it to create images, write documents, build presentations, generate spreadsheets, and more. Connect to any local or remote model and work across formats without switching tools.
+Hook it up to any local or remote model and work across formats: images, documents, presentations, spreadsheets.
 
 Part of the Benchlabs suite of open source developer tools.

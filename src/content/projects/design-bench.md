@@ -8,6 +8,6 @@ github: https://github.com/mkappworks-dev
 benchlabsApp: true
 ---
 
-Design Bench is a lightweight design tooling environment built for developers who need to inspect and prototype UI without switching to a full design suite. Inspect spacing, colors, and typography from live components. Annotate and export assets directly.
+Design Bench is a design tool built for developers and builders. Inspect live components — spacing, typography, color — without opening Figma. Annotate and export assets directly.
 
 Part of the Benchlabs suite of open source developer tools.
