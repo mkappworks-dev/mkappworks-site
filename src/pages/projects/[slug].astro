@@ -59,6 +59,25 @@ if (linkParts.length > 0) {
 ---
 
 <BaseLayout title={project.data.name} description={project.data.description}>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://mkappworks.com' },
+      { '@type': 'ListItem', position: 2, name: 'Projects', item: 'https://mkappworks.com/projects' },
+      { '@type': 'ListItem', position: 3, name: project.data.name },
+    ],
+  })} />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: project.data.name,
+    description: project.data.description,
+    url: project.data.url ?? `https://mkappworks.com/projects/${project.id}`,
+    keywords: project.data.tags?.join(', '),
+    author: { '@type': 'Person', name: 'mk', url: 'https://mkappworks.com' },
+    ...(project.data.status !== 'wip' && { applicationCategory: 'DeveloperApplication' }),
+  })} />
   <article class="max-w-[680px] mx-auto px-6 py-12">
     <!-- Back -->
     <a

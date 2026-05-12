@@ -6,12 +6,13 @@ interface Props {
   description: string;
   date: Date;
   tags: string[];
+  image?: string;
   minutesRead?: number;
   prev?: { slug: string; title: string } | null;
   next?: { slug: string; title: string } | null;
 }
 
-const { title, description, date, tags, minutesRead, prev, next } = Astro.props;
+const { title, description, date, tags, image, minutesRead, prev, next } = Astro.props;
 
 const dateStr = date.toLocaleDateString('en-US', {
   month: 'long',
@@ -20,7 +21,16 @@ const dateStr = date.toLocaleDateString('en-US', {
 });
 ---
 
-<BaseLayout {title} {description} type="article" {date}>
+<BaseLayout {title} {description} type="article" {date} {image}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://mkappworks.com' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://mkappworks.com/blog' },
+      { '@type': 'ListItem', position: 3, name: title },
+    ],
+  })} />
   <article class="max-w-[680px] mx-auto px-6 py-12">
     <!-- Back -->
     <a
