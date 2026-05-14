@@ -17,6 +17,7 @@ const metaTransformer = {
 
 export default defineConfig({
   site: "https://mkappworks.com",
+  trailingSlash: "always",
   integrations: [mdx(), sitemap()],
   vite: {
     optimizeDeps: {
