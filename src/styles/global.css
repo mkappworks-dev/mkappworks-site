@@ -7,9 +7,19 @@
 @import '@fontsource/jetbrains-mono/500.css';
 @import '@fontsource/jetbrains-mono/600.css';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+/* Tailwind v4: dark mode keyed off the [data-theme="dark"] attribute (was the
+   darkMode config in v3). Kept for parity even though no `dark:` utilities exist yet. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* Tailwind v4: theme tokens live in CSS (was theme.extend in tailwind.config.mjs).
+   Only the font families were actually consumed (font-sans / font-mono utilities);
+   the old color tokens were unused — components reference CSS vars via arbitrary values. */
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
 
 /* ── CSS Variables ─────────────────────────────────────── */
 /* Design tokens (handoff design system). */

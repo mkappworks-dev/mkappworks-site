@@ -13,7 +13,7 @@ Personal site for [mkappworks.com](https://mkappworks.com). Built with Astro 6.
 | Tailwind CSS                   | Styling (wired via PostCSS, no Astro adapter)    |
 | Shiki                          | Syntax highlighting (built into Astro)           |
 | Mermaid                        | Client-side diagrams in MDX via `<Diagram />`    |
-| Satori + Resvg                 | OG banner generation (`scripts/generate-og.mjs`) |
+| `sharp`                        | OG banner generation (`scripts/generate-og.mjs`) |
 | `@fontsource/inter`            | Self-hosted Inter                                |
 | `@fontsource/jetbrains-mono`   | Self-hosted JetBrains Mono                       |
 
@@ -109,8 +109,8 @@ Long-form description shown on the project detail page.
 ## OG banner
 
 The site-wide Open Graph image at `public/og-banner.png` is generated from
-`scripts/generate-og.mjs` using Satori (JSX → SVG) and Resvg (SVG → PNG).
-Re-run it after editing the script:
+`scripts/generate-og.mjs` using `sharp` (composites an SVG layout with the logo
+into a PNG). Re-run it after editing the script:
 
 ```sh
 node scripts/generate-og.mjs
