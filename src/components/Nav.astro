@@ -13,12 +13,12 @@ const links = [
 
 ---
 
-<nav class="sticky top-0 z-10 bg-[var(--bg)] border-b border-[var(--border-subtle)]">
+<nav class="sticky top-0 z-10 bg-(--bg) border-b border-(--border-subtle)">
   <div class="max-w-[680px] mx-auto px-6 h-[60px] flex items-center justify-between gap-4">
     <!-- Left: logo + page links -->
     <div class="flex items-center gap-5">
       <a href="/" aria-label="mkappworks home">
-        <img src="/favicon.svg" width="28" height="28" alt="mk!" class="rounded-[5px] ring-1 ring-[var(--border)]" />
+        <img src="/favicon.svg" width="28" height="28" alt="mk!" class="rounded-[5px] ring-1 ring-(--border)" />
       </a>
       <ul class="flex items-center gap-1 text-[13px] font-mono">
         {links.map(({ href, label }) => (
@@ -28,8 +28,8 @@ const links = [
               class:list={[
                 'px-3 py-1.5 rounded-md transition-all duration-150',
                 isActive(href)
-                  ? 'text-[var(--accent)] bg-[var(--accent-subtle)]'
-                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]',
+                  ? 'text-(--accent) bg-(--accent-subtle)'
+                  : 'text-(--text-secondary) hover:text-(--text-primary)',
               ]}
             >
               {label}

@@ -11,13 +11,13 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
 
 <BaseLayout title="Writing" description="Posts on system design, algorithms, and what I'm building.">
   <div class="max-w-[680px] mx-auto px-6 py-12">
-    <div class="font-mono text-[11px] tracking-[2px] text-[var(--accent)] uppercase mb-4">
+    <div class="font-mono text-[11px] tracking-[2px] text-(--accent) uppercase mb-4">
       // writing
     </div>
-    <h1 class="font-mono text-[28px] font-semibold text-[var(--text-primary)] tracking-tight mb-2">
+    <h1 class="font-mono text-[28px] font-semibold text-(--text-primary) tracking-tight mb-2">
       Writing
     </h1>
-    <p class="text-[15px] text-[var(--text-secondary)] mb-8">
+    <p class="text-[15px] text-(--text-secondary) mb-8">
       Posts on system design, algorithms, and what I'm building.
     </p>
 
@@ -27,12 +27,12 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
         id="blog-search"
         type="search"
         placeholder="Search posts..."
-        class="w-full px-4 py-2.5 pr-9 bg-[var(--surface)] border border-[var(--border)] rounded-lg font-mono text-[13px] text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:border-[var(--accent)] transition-colors"
+        class="w-full px-4 py-2.5 pr-9 bg-(--surface) border border-(--border) rounded-lg font-mono text-[13px] text-(--text-primary) placeholder:text-(--text-tertiary) focus:outline-none focus:border-(--accent) transition-colors"
       />
       <button
         id="search-clear"
         aria-label="Clear search"
-        class="absolute right-3 top-1/2 -translate-y-1/2 hidden text-[var(--accent)] hover:opacity-70 transition-opacity"
+        class="absolute right-3 top-1/2 -translate-y-1/2 hidden text-(--accent) hover:opacity-70 transition-opacity"
       >
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <line x1="1" y1="1" x2="13" y2="13"/>
@@ -46,14 +46,14 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
       <div class="flex flex-wrap gap-1.5 mb-8" id="tag-filters">
         <button
           data-tag=""
-          class="tag-btn active font-mono text-[13px] px-2.5 py-0.5 rounded-md border border-[color:rgba(34,197,94,0.4)] bg-[var(--accent-subtle)] text-[var(--accent)] transition-all duration-150"
+          class="tag-btn active font-mono text-[13px] px-2.5 py-0.5 rounded-md border border-[color:rgba(34,197,94,0.4)] bg-(--accent-subtle) text-(--accent) transition-all duration-150"
         >
           all
         </button>
         {allTags.map((tag) => (
           <button
             data-tag={tag}
-            class="tag-btn font-mono text-[13px] px-2.5 py-0.5 rounded-md border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all duration-150"
+            class="tag-btn font-mono text-[13px] px-2.5 py-0.5 rounded-md border border-(--border) text-(--text-secondary) hover:border-(--accent) hover:text-(--accent) transition-all duration-150"
           >
             {tag}
           </button>
@@ -81,7 +81,7 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
         </div>
       ))}
     </div>
-    <p id="empty-state" class="hidden font-mono text-[13px] text-[var(--text-tertiary)] mt-4">
+    <p id="empty-state" class="hidden font-mono text-[13px] text-(--text-tertiary) mt-4">
       No posts found.
     </p>
   </div>
@@ -101,8 +101,8 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
   const items = document.querySelectorAll<HTMLElement>('[data-post-item]');
   const empty = document.getElementById('empty-state');
 
-  const activeClasses = ['border-[color:rgba(34,197,94,0.4)]', 'bg-[var(--accent-subtle)]', 'text-[var(--accent)]'];
-  const inactiveClasses = ['border-[var(--border)]', 'text-[var(--text-secondary)]'];
+  const activeClasses = ['border-[color:rgba(34,197,94,0.4)]', 'bg-(--accent-subtle)', 'text-(--accent)'];
+  const inactiveClasses = ['border-(--border)', 'text-(--text-secondary)'];
 
   let currentTag = '';
   let currentQuery = '';

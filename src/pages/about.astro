@@ -18,39 +18,39 @@ const connect = [
 
 <BaseLayout title="About" description="About mkappworks.">
   <div class="max-w-[680px] mx-auto px-6 py-12">
-    <div class="font-mono text-[11px] tracking-[2px] text-[var(--accent)] uppercase mb-4">
+    <div class="font-mono text-[11px] tracking-[2px] text-(--accent) uppercase mb-4">
       // about
     </div>
-    <h1 class="font-mono text-[28px] font-semibold text-[var(--text-primary)] tracking-tight mb-8">
+    <h1 class="font-mono text-[28px] font-semibold text-(--text-primary) tracking-tight mb-8">
       About
     </h1>
 
-    <div class="text-[15px] text-[var(--text-secondary)] leading-[1.7] space-y-4 mb-10">
+    <div class="text-[15px] text-(--text-secondary) leading-[1.7] space-y-4 mb-10">
       <p>
         I build developer tools — mostly local-first, mostly open source. I write about dev tooling,
         system design, and shipping software.
       </p>
       <p>
-        My main focus is <a href="https://benchlabs.app" target="_blank" rel="noopener noreferrer" class="text-[var(--accent)] border-b border-[color:rgba(34,197,94,0.4)] hover:opacity-80 transition-opacity">BenchLabs</a>.
+        My main focus is <a href="https://benchlabs.app" target="_blank" rel="noopener noreferrer" class="text-(--accent) border-b border-[color:rgba(34,197,94,0.4)] hover:opacity-80 transition-opacity">BenchLabs</a>.
         Most of what I build is open source. The blog has the long-form thinking; GitHub has the code.
       </p>
     </div>
 
     <!-- Stack -->
-    <div class="font-mono text-[11px] tracking-[2px] text-[var(--accent)] uppercase mb-4">
+    <div class="font-mono text-[11px] tracking-[2px] text-(--accent) uppercase mb-4">
       // stack
     </div>
     <dl class="stack-list font-mono text-[13px] mb-12 grid gap-y-1.5 gap-x-3">
       {stack.map((row) => (
         <>
-          <dt class="text-[var(--accent)]">{row.label}</dt>
-          <dd class="text-[var(--text-secondary)] m-0" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>{row.items}</dd>
+          <dt class="text-(--accent)">{row.label}</dt>
+          <dd class="text-(--text-secondary) m-0" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>{row.items}</dd>
         </>
       ))}
     </dl>
 
     <!-- Connect -->
-    <div class="font-mono text-[11px] tracking-[2px] text-[var(--accent)] uppercase mb-4">
+    <div class="font-mono text-[11px] tracking-[2px] text-(--accent) uppercase mb-4">
       // connect
     </div>
     <div class="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[14px]">
@@ -59,7 +59,7 @@ const connect = [
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          class="text-[var(--accent)] hover:opacity-80 transition-opacity"
+          class="text-(--accent) hover:opacity-80 transition-opacity"
         >
           {label} ↗
         </a>

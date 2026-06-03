@@ -9,9 +9,9 @@ const links = [
 ];
 ---
 
-<footer class="border-t border-[var(--border-subtle)] mt-20">
+<footer class="border-t border-(--border-subtle) mt-20">
   <div class="max-w-[680px] mx-auto px-6 py-6 flex items-center justify-between flex-wrap gap-3">
-    <span class="text-[13px] text-[var(--text-tertiary)] font-mono">
+    <span class="text-[13px] text-(--text-tertiary) font-mono">
       © {year} mkappworks
     </span>
     <div class="flex items-center gap-4">
@@ -20,7 +20,7 @@ const links = [
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          class="text-[13px] text-[var(--text-tertiary)] font-mono hover:text-[var(--text-primary)] transition-colors duration-150"
+          class="text-[13px] text-(--text-tertiary) font-mono hover:text-(--text-primary) transition-colors duration-150"
         >
           {label}
         </a>

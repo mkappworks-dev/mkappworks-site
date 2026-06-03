@@ -13,11 +13,11 @@ interface Props {
 const { rows } = Astro.props;
 ---
 
-<dl class="spec-sheet border border-[var(--border)] rounded-md p-4 grid gap-y-2 gap-x-4">
+<dl class="spec-sheet border border-(--border) rounded-md p-4 grid gap-y-2 gap-x-4">
   {rows.map((row) => (
     <>
-      <dt class="font-mono text-[12px] text-[var(--text-tertiary)] tracking-wide">{row.label}</dt>
-      <dd class="font-mono text-[13px] text-[var(--text-primary)] m-0">
+      <dt class="font-mono text-[12px] text-(--text-tertiary) tracking-wide">{row.label}</dt>
+      <dd class="font-mono text-[13px] text-(--text-primary) m-0">
         {row.html ? <span set:html={row.html} /> : row.text}
       </dd>
     </>

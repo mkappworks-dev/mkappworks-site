@@ -21,30 +21,30 @@ const latestPosts = allPosts
 >
   <!-- Hero -->
   <section class="max-w-[680px] mx-auto px-6 pt-12 pb-12">
-    <div class="font-mono text-[11px] tracking-[2px] text-[var(--accent)] uppercase mb-5">
+    <div class="font-mono text-[11px] tracking-[2px] text-(--accent) uppercase mb-5">
       // builder · open source
     </div>
-    <h1 class="font-mono text-[clamp(28px,5vw,32px)] font-semibold text-[var(--text-primary)] tracking-tight leading-[1.2] mb-5">
+    <h1 class="font-mono text-[clamp(28px,5vw,32px)] font-semibold text-(--text-primary) tracking-tight leading-[1.2] mb-5">
       mkappworks
     </h1>
-    <p class="text-[16px] text-[var(--text-secondary)] leading-[1.65] mb-8">
+    <p class="text-[16px] text-(--text-secondary) leading-[1.65] mb-8">
       I build open source projects at the intersection of dev tooling, games, and infrastructure.
       Writing about system design and algorithms along the way.
     </p>
     <SocialLinks />
   </section>
 
-  <div class="max-w-[680px] mx-auto px-6 border-t border-[var(--border-subtle)]"></div>
+  <div class="max-w-[680px] mx-auto px-6 border-t border-(--border-subtle)"></div>
 
   <!-- Projects -->
   <section class="max-w-[680px] mx-auto px-6 py-12">
-    <div class="font-mono text-[11px] tracking-[2px] text-[var(--accent)] uppercase mb-6">
+    <div class="font-mono text-[11px] tracking-[2px] text-(--accent) uppercase mb-6">
       // projects
     </div>
-    <div class="font-mono text-[11px] tracking-[2px] text-[var(--text-tertiary)] uppercase mb-3">
+    <div class="font-mono text-[11px] tracking-[2px] text-(--text-tertiary) uppercase mb-3">
       // benchlabs
     </div>
-    <div class="border border-[var(--border)] rounded-lg overflow-hidden flex flex-col gap-px bg-[var(--border)]">
+    <div class="border border-(--border) rounded-lg overflow-hidden flex flex-col gap-px bg-(--border)">
       {benchlabsProjects.map((project) => (
         <ProjectCard
           slug={project.id}
@@ -58,10 +58,10 @@ const latestPosts = allPosts
       ))}
     </div>
 
-    <div class="font-mono text-[11px] tracking-[2px] text-[var(--text-tertiary)] uppercase mt-8 mb-3">
+    <div class="font-mono text-[11px] tracking-[2px] text-(--text-tertiary) uppercase mt-8 mb-3">
       // infra
     </div>
-    <div class="border border-[var(--border)] rounded-lg overflow-hidden flex flex-col gap-px bg-[var(--border)]">
+    <div class="border border-(--border) rounded-lg overflow-hidden flex flex-col gap-px bg-(--border)">
       {otherProjects.map((project) => (
         <ProjectCard
           slug={project.id}
@@ -76,18 +76,18 @@ const latestPosts = allPosts
     </div>
     <a
       href="/projects/"
-      class="inline-flex items-center gap-1 mt-4 text-[13px] font-mono font-medium text-[var(--accent)] hover:gap-2 transition-all duration-150"
+      class="inline-flex items-center gap-1 mt-4 text-[13px] font-mono font-medium text-(--accent) hover:gap-2 transition-all duration-150"
     >
       all projects →
     </a>
   </section>
    {latestPosts.length > 0 && (
     <>
-      <div class="max-w-[680px] mx-auto px-6 border-t border-[var(--border-subtle)]"></div>
+      <div class="max-w-[680px] mx-auto px-6 border-t border-(--border-subtle)"></div>
 
       <!-- Writing -->
       <section class="max-w-[680px] mx-auto px-6 py-12">
-        <div class="font-mono text-[11px] tracking-[2px] text-[var(--accent)] uppercase mb-6">
+        <div class="font-mono text-[11px] tracking-[2px] text-(--accent) uppercase mb-6">
           // writing
         </div>
         <div>
@@ -104,7 +104,7 @@ const latestPosts = allPosts
         </div>
         <a
           href="/blog/"
-          class="inline-flex items-center gap-1 mt-4 text-[13px] font-mono font-medium text-[var(--accent)] hover:gap-2 transition-all duration-150"
+          class="inline-flex items-center gap-1 mt-4 text-[13px] font-mono font-medium text-(--accent) hover:gap-2 transition-all duration-150"
         >
           all posts →
         </a>

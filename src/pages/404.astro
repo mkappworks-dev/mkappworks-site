@@ -4,18 +4,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout title="404 — Not Found" description="Page not found.">
   <div class="max-w-[680px] mx-auto px-6 py-12 flex flex-col items-start">
-    <div class="font-mono text-[11px] tracking-[2px] text-[var(--accent)] uppercase mb-4">
+    <div class="font-mono text-[11px] tracking-[2px] text-(--accent) uppercase mb-4">
       // 404
     </div>
-    <h1 class="font-mono text-[72px] font-bold text-[var(--text-primary)] leading-none tracking-tight mb-6">
+    <h1 class="font-mono text-[72px] font-bold text-(--text-primary) leading-none tracking-tight mb-6">
       404
     </h1>
-    <p class="text-[15px] text-[var(--text-secondary)] leading-[1.7] mb-8">
+    <p class="text-[15px] text-(--text-secondary) leading-[1.7] mb-8">
       This page doesn't exist. It may have been moved, deleted, or you may have mistyped the URL.
     </p>
     <a
       href="/"
-      class="font-mono text-[13px] text-[var(--accent)] border border-[var(--accent)] px-4 py-2 rounded-md hover:bg-[var(--accent-subtle)] transition-colors duration-150"
+      class="font-mono text-[13px] text-(--accent) border border-(--accent) px-4 py-2 rounded-md hover:bg-(--accent-subtle) transition-colors duration-150"
     >
       ← back home
     </a>

@@ -35,23 +35,23 @@ const dateStr = date.toLocaleDateString('en-US', {
     <!-- Back -->
     <a
       href="/blog/"
-      class="inline-flex items-center gap-1 text-[13px] font-mono text-[var(--text-tertiary)] hover:text-[var(--accent)] transition-colors mb-10"
+      class="inline-flex items-center gap-1 text-[13px] font-mono text-(--text-tertiary) hover:text-(--accent) transition-colors mb-10"
     >
       ← back to writing
     </a>
 
     <!-- Header -->
-    <header class="mb-10 pb-6 border-b border-[var(--border-subtle)]">
-      <h1 class="font-mono text-[28px] font-semibold text-[var(--text-primary)] tracking-tight leading-[1.25] mb-4">
+    <header class="mb-10 pb-6 border-b border-(--border-subtle)">
+      <h1 class="font-mono text-[28px] font-semibold text-(--text-primary) tracking-tight leading-[1.25] mb-4">
         {title}
       </h1>
-      <div class="flex flex-wrap items-center gap-x-2 gap-y-1.5 font-mono text-[13px] text-[var(--text-tertiary)]">
+      <div class="flex flex-wrap items-center gap-x-2 gap-y-1.5 font-mono text-[13px] text-(--text-tertiary)">
         <time datetime={date.toISOString()}>{dateStr}</time>
         {minutesRead && <><span>·</span><span>{minutesRead} min</span></>}
         {tags.length > 0 && <span>·</span>}
         <div class="flex flex-wrap gap-1.5">
           {tags.map((tag) => (
-            <span class="text-[12px] bg-[var(--surface)] text-[var(--text-tertiary)] px-2 py-0.5 rounded">
+            <span class="text-[12px] bg-(--surface) text-(--text-tertiary) px-2 py-0.5 rounded">
               {tag}
             </span>
           ))}
@@ -66,12 +66,12 @@ const dateStr = date.toLocaleDateString('en-US', {
 
     <!-- Prev / Next -->
     {(prev || next) && (
-      <nav class="mt-16 pt-8 border-t border-[var(--border-subtle)] grid grid-cols-2 gap-6">
+      <nav class="mt-16 pt-8 border-t border-(--border-subtle) grid grid-cols-2 gap-6">
         <div>
           {prev && (
             <a href={`/blog/${prev.slug}/`} class="group block">
-              <div class="font-mono text-[12px] text-[var(--text-tertiary)] mb-1">← older</div>
-              <div class="text-[14px] text-[var(--text-secondary)] group-hover:text-[var(--accent)] transition-colors leading-snug">
+              <div class="font-mono text-[12px] text-(--text-tertiary) mb-1">← older</div>
+              <div class="text-[14px] text-(--text-secondary) group-hover:text-(--accent) transition-colors leading-snug">
                 {prev.title}
               </div>
             </a>
@@ -80,8 +80,8 @@ const dateStr = date.toLocaleDateString('en-US', {
         <div class="text-right">
           {next && (
             <a href={`/blog/${next.slug}/`} class="group block">
-              <div class="font-mono text-[12px] text-[var(--text-tertiary)] mb-1">newer →</div>
-              <div class="text-[14px] text-[var(--text-secondary)] group-hover:text-[var(--accent)] transition-colors leading-snug">
+              <div class="font-mono text-[12px] text-(--text-tertiary) mb-1">newer →</div>
+              <div class="text-[14px] text-(--text-secondary) group-hover:text-(--accent) transition-colors leading-snug">
                 {next.title}
               </div>
             </a>

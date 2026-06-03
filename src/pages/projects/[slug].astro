@@ -23,7 +23,7 @@ const relatedPosts = allPosts
 
 const statusLabels = { live: 'live', beta: 'beta', wip: 'wip' } as const;
 const statusStyles: Record<'live' | 'beta' | 'wip', string> = {
-  live: 'text-[#22c55e] bg-[var(--accent-subtle)]',
+  live: 'text-[#22c55e] bg-(--accent-subtle)',
   beta: 'text-yellow-400 bg-yellow-500/10',
   wip:  'text-red-400 bg-red-500/10',
 };
@@ -48,10 +48,10 @@ if (project.data.tags?.length) {
 
 const linkParts: string[] = [];
 if (project.data.github) {
-  linkParts.push(`<a href="${project.data.github}" target="_blank" rel="noopener noreferrer" class="text-[var(--accent)] hover:opacity-80">github ↗</a>`);
+  linkParts.push(`<a href="${project.data.github}" target="_blank" rel="noopener noreferrer" class="text-(--accent) hover:opacity-80">github ↗</a>`);
 }
 if (project.data.url) {
-  linkParts.push(`<a href="${project.data.url}" target="_blank" rel="noopener noreferrer" class="text-[var(--accent)] hover:opacity-80">live site ↗</a>`);
+  linkParts.push(`<a href="${project.data.url}" target="_blank" rel="noopener noreferrer" class="text-(--accent) hover:opacity-80">live site ↗</a>`);
 }
 if (linkParts.length > 0) {
   rows.push({ label: 'links', html: linkParts.join(' &nbsp; ') });
@@ -82,7 +82,7 @@ if (linkParts.length > 0) {
     <!-- Back -->
     <a
       href="/projects/"
-      class="inline-flex items-center gap-1 text-[13px] font-mono text-[var(--text-tertiary)] hover:text-[var(--accent)] transition-colors mb-10"
+      class="inline-flex items-center gap-1 text-[13px] font-mono text-(--text-tertiary) hover:text-(--accent) transition-colors mb-10"
     >
       ← back to projects
     </a>
@@ -98,10 +98,10 @@ if (linkParts.length > 0) {
           class="rounded-[16px] mb-5"
         />
       )}
-      <h1 class="font-mono text-[28px] font-semibold text-[var(--text-primary)] tracking-tight mb-3">
+      <h1 class="font-mono text-[28px] font-semibold text-(--text-primary) tracking-tight mb-3">
         {project.data.name}
       </h1>
-      <p class="text-[15px] text-[var(--text-secondary)] leading-relaxed max-w-[520px] mb-6">
+      <p class="text-[15px] text-(--text-secondary) leading-relaxed max-w-[520px] mb-6">
         {project.data.description}
       </p>
       <SpecSheet rows={rows} />
@@ -114,20 +114,20 @@ if (linkParts.length > 0) {
 
     <!-- Related posts -->
     {relatedPosts.length > 0 && (
-      <section class="mt-14 pt-8 border-t border-[var(--border-subtle)]">
-        <div class="font-mono text-[11px] tracking-[2px] text-[var(--accent)] uppercase mb-4">
+      <section class="mt-14 pt-8 border-t border-(--border-subtle)">
+        <div class="font-mono text-[11px] tracking-[2px] text-(--accent) uppercase mb-4">
           // related posts
         </div>
         <div>
           {relatedPosts.map((post) => (
             <a
               href={`/blog/${post.id}/`}
-              class="group flex items-center justify-between gap-4 py-2 border-b border-[var(--border-subtle)] last:border-0"
+              class="group flex items-center justify-between gap-4 py-2 border-b border-(--border-subtle) last:border-0"
             >
-              <div class="font-mono text-[14px] text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors">
+              <div class="font-mono text-[14px] text-(--text-primary) group-hover:text-(--accent) transition-colors">
                 {post.data.title}
               </div>
-              <time class="font-mono text-[12px] text-[var(--text-tertiary)] shrink-0">
+              <time class="font-mono text-[12px] text-(--text-tertiary) shrink-0">
                 {post.data.date.toISOString().slice(0, 10)}
               </time>
             </a>
