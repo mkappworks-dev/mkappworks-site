@@ -1,23 +1,28 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
+const building = [
+  { name: 'BenchLabs', href: 'https://benchlabs.app', external: true,  desc: 'Local-first AI dev tools, built with Flutter.' },
+  { name: 'Cloudzilla', href: 'https://cloudzilla.dev', external: true, desc: 'Self-hosted, single-binary Git forge in Go.' },
+];
+
 const stack = [
   { label: 'languages', items: 'TypeScript, Go, Python, Dart, Java' },
   { label: 'frontend',  items: 'Astro, ReactJS, SolidJS, Flutter, Tailwind' },
   { label: 'backend',   items: 'NodeJS, Spring Boot, Postgres, Redis' },
-  { label: 'tools',     items: 'Git, Docker, GitHub Actions' },
+  { label: 'tools',     items: 'Git, Docker, GitHub Actions, Vercel' },
 ];
 
 const connect = [
   { label: 'github',  href: 'https://github.com/mkappworks-dev' },
-  { label: 'x',       href: 'https://www.x.com/mkappworks' },
+  { label: 'x',       href: 'https://x.com/mkappworks' },
   { label: 'discord', href: 'https://discord.gg/g2xKWJcF' },
   { label: 'youtube', href: 'https://youtube.com/@mkappworks' },
 ];
 ---
 
 <BaseLayout title="About" description="About mkappworks.">
-  <div class="max-w-[680px] mx-auto px-6 py-12">
+  <div class="max-w-170 mx-auto px-6 py-12">
     <div class="font-mono text-[11px] tracking-[2px] text-(--accent) uppercase mb-4">
       // about
     </div>
@@ -31,9 +36,32 @@ const connect = [
         system design, and shipping software.
       </p>
       <p>
-        My main focus is <a href="https://benchlabs.app" target="_blank" rel="noopener noreferrer" class="text-(--accent) border-b border-[color:rgba(34,197,94,0.4)] hover:opacity-80 transition-opacity">BenchLabs</a>.
+        Right now that means two things: <a href="https://benchlabs.app" target="_blank" rel="noopener noreferrer" class="text-(--accent) border-b border-[rgba(34,197,94,0.4)] hover:opacity-80 transition-opacity">BenchLabs</a>,
+        a suite of local-first AI dev tools, and <a href="/projects/cloudzilla/" class="text-(--accent) border-b border-[rgba(34,197,94,0.4)] hover:opacity-80 transition-opacity">Cloudzilla</a>,
+        a self-hosted Git forge that ships as a single binary.
+      </p>
+      <p>
         Most of what I build is open source. The blog has the long-form thinking; GitHub has the code.
       </p>
+    </div>
+
+    <!-- Building -->
+    <div class="font-mono text-[11px] tracking-[2px] text-(--accent) uppercase mb-4">
+      // building
+    </div>
+    <div class="mb-12 space-y-3">
+      {building.map(({ name, href, external, desc }) => (
+        <div class="flex flex-col sm:flex-row sm:items-baseline sm:gap-3">
+          <a
+            href={href}
+            {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            class="font-mono text-[14px] text-(--accent) hover:opacity-80 transition-opacity shrink-0 sm:w-27.5"
+          >
+            {name}{external && ' ↗'}
+          </a>
+          <span class="text-[14px] text-(--text-secondary) leading-snug">{desc}</span>
+        </div>
+      ))}
     </div>
 
     <!-- Stack -->
