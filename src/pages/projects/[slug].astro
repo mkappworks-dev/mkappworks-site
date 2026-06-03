@@ -21,11 +21,12 @@ const relatedPosts = allPosts
   .filter((p) => p.data.tags.includes(project.id))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const statusLabels = { live: 'live', beta: 'beta', wip: 'wip' } as const;
-const statusStyles: Record<'live' | 'beta' | 'wip', string> = {
-  live: 'text-[#22c55e] bg-(--accent-subtle)',
-  beta: 'text-yellow-400 bg-yellow-500/10',
-  wip:  'text-red-400 bg-red-500/10',
+const statusLabels = { live: 'live', beta: 'beta', alpha: 'alpha', wip: 'wip' } as const;
+const statusStyles: Record<'live' | 'beta' | 'alpha' | 'wip', string> = {
+  live:  'text-[#22c55e] bg-(--accent-subtle)',
+  beta:  'text-yellow-400 bg-yellow-500/10',
+  alpha: 'text-orange-400 bg-orange-500/10',
+  wip:   'text-red-400 bg-red-500/10',
 };
 
 const rows: { label: string; html: string }[] = [
@@ -48,10 +49,10 @@ if (project.data.tags?.length) {
 
 const linkParts: string[] = [];
 if (project.data.github) {
-  linkParts.push(`<a href="${project.data.github}" target="_blank" rel="noopener noreferrer" class="text-(--accent) hover:opacity-80">github ↗</a>`);
+  linkParts.push(`<a href="${project.data.github}" target="_blank" rel="noopener noreferrer" class="text-[#22c55e] hover:opacity-80">github ↗</a>`);
 }
 if (project.data.url) {
-  linkParts.push(`<a href="${project.data.url}" target="_blank" rel="noopener noreferrer" class="text-(--accent) hover:opacity-80">live site ↗</a>`);
+  linkParts.push(`<a href="${project.data.url}" target="_blank" rel="noopener noreferrer" class="text-[#22c55e] hover:opacity-80">live site ↗</a>`);
 }
 if (linkParts.length > 0) {
   rows.push({ label: 'links', html: linkParts.join(' &nbsp; ') });
@@ -76,7 +77,7 @@ if (linkParts.length > 0) {
     url: project.data.url ?? `https://mkappworks.com/projects/${project.id}`,
     keywords: project.data.tags?.join(', '),
     author: { '@type': 'Person', name: 'mk', url: 'https://mkappworks.com' },
-    ...(project.data.status !== 'wip' && { applicationCategory: 'DeveloperApplication' }),
+    ...(project.data.status !== 'wip' && project.data.status !== 'alpha' && { applicationCategory: 'DeveloperApplication' }),
   })} />
   <article class="max-w-[680px] mx-auto px-6 py-12">
     <!-- Back -->
