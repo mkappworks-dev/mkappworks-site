@@ -20,6 +20,7 @@ const projects = defineCollection({
     description: z.string(),
     status: z.enum(['live', 'beta', 'alpha', 'wip']),
     tags: z.array(z.string()),
+    stack: z.array(z.string()).optional(),
     github: z.string().url().optional(),
     url: z.string().url().optional(),
     version: z.string().optional(),

@@ -5,7 +5,12 @@ import { getCollection } from 'astro:content';
 
 const allProjects = await getCollection('projects');
 const benchlabsProjects = allProjects.filter((p) => p.data.benchlabsApp);
-const otherProjects = allProjects.filter((p) => !p.data.benchlabsApp);
+const infraProjects = allProjects.filter(
+  (p) => !p.data.benchlabsApp && p.data.tags.includes('infra'),
+);
+const productProjects = allProjects.filter(
+  (p) => !p.data.benchlabsApp && !p.data.tags.includes('infra'),
+);
 ---
 
 <BaseLayout title="Projects" description="Open-source tools and experiments.">
@@ -21,7 +26,7 @@ const otherProjects = allProjects.filter((p) => !p.data.benchlabsApp);
     </p>
 
     <div class="font-mono text-[11px] tracking-[2px] text-(--text-tertiary) uppercase mb-3">
-      // benchlabs
+      // desktop
     </div>
     <div class="flex flex-col gap-3">
       {benchlabsProjects.map((project) => (
@@ -38,10 +43,27 @@ const otherProjects = allProjects.filter((p) => !p.data.benchlabsApp);
     </div>
 
     <div class="font-mono text-[11px] tracking-[2px] text-(--text-tertiary) uppercase mt-10 mb-3">
+      // web
+    </div>
+    <div class="flex flex-col gap-3">
+      {productProjects.map((project) => (
+        <ProjectCard
+          slug={project.id}
+          name={project.data.name}
+          description={project.data.description}
+          tags={project.data.tags}
+          status={project.data.status}
+          benchlabsApp={project.data.benchlabsApp}
+          compact={false}
+        />
+      ))}
+    </div>
+
+    <div class="font-mono text-[11px] tracking-[2px] text-(--text-tertiary) uppercase mt-10 mb-3">
       // infra
     </div>
     <div class="flex flex-col gap-3">
-      {otherProjects.map((project) => (
+      {infraProjects.map((project) => (
         <ProjectCard
           slug={project.id}
           name={project.data.name}

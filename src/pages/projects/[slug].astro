@@ -43,8 +43,8 @@ if (project.data.benchlabsApp) {
   rows.push({ label: 'part of', html: 'benchlabs' });
 }
 
-if (project.data.tags?.length) {
-  rows.push({ label: 'stack', html: project.data.tags.join(' · ') });
+if (project.data.stack?.length) {
+  rows.push({ label: 'stack', html: project.data.stack.join(' · ') });
 }
 
 const linkParts: string[] = [];
@@ -102,7 +102,7 @@ if (linkParts.length > 0) {
       <h1 class="font-mono text-[28px] font-semibold text-(--text-primary) tracking-tight mb-3">
         {project.data.name}
       </h1>
-      <p class="text-[15px] text-(--text-secondary) leading-relaxed max-w-[520px] mb-6">
+      <p class="text-[15px] text-(--text-secondary) leading-relaxed mb-6 text-justify [text-align-last:justify]">
         {project.data.description}
       </p>
       <SpecSheet rows={rows} />
@@ -112,6 +112,22 @@ if (linkParts.length > 0) {
     <div class="prose">
       <Content />
     </div>
+
+    <!-- Tags -->
+    {project.data.tags?.length > 0 && (
+      <section class="mt-10 pt-8 border-t border-(--border-subtle)">
+        <div class="font-mono text-[11px] tracking-[2px] text-(--accent) uppercase mb-4">
+          // tags
+        </div>
+        <div class="flex flex-wrap gap-1.5">
+          {project.data.tags.map((tag) => (
+            <span class="font-mono text-[12px] bg-(--bg) text-(--text-tertiary) px-2 py-0.5 rounded">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </section>
+    )}
 
     <!-- Related posts -->
     {relatedPosts.length > 0 && (

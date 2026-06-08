@@ -8,7 +8,12 @@ import { getMinutesRead } from '../utils/reading-time';
 
 const allProjects = await getCollection('projects');
 const benchlabsProjects = allProjects.filter((p) => p.data.benchlabsApp);
-const otherProjects = allProjects.filter((p) => !p.data.benchlabsApp);
+const infraProjects = allProjects.filter(
+  (p) => !p.data.benchlabsApp && p.data.tags.includes('infra'),
+);
+const productProjects = allProjects.filter(
+  (p) => !p.data.benchlabsApp && !p.data.tags.includes('infra'),
+);
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const latestPosts = allPosts
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -42,7 +47,7 @@ const latestPosts = allPosts
       // projects
     </div>
     <div class="font-mono text-[11px] tracking-[2px] text-(--text-tertiary) uppercase mb-3">
-      // benchlabs
+      // desktop
     </div>
     <div class="border border-(--border) rounded-lg overflow-hidden flex flex-col gap-px bg-(--border)">
       {benchlabsProjects.map((project) => (
@@ -59,10 +64,27 @@ const latestPosts = allPosts
     </div>
 
     <div class="font-mono text-[11px] tracking-[2px] text-(--text-tertiary) uppercase mt-8 mb-3">
+      // web
+    </div>
+    <div class="border border-(--border) rounded-lg overflow-hidden flex flex-col gap-px bg-(--border)">
+      {productProjects.map((project) => (
+        <ProjectCard
+          slug={project.id}
+          name={project.data.name}
+          description={project.data.description}
+          tags={project.data.tags}
+          status={project.data.status}
+          benchlabsApp={project.data.benchlabsApp}
+          compact={true}
+        />
+      ))}
+    </div>
+
+    <div class="font-mono text-[11px] tracking-[2px] text-(--text-tertiary) uppercase mt-8 mb-3">
       // infra
     </div>
     <div class="border border-(--border) rounded-lg overflow-hidden flex flex-col gap-px bg-(--border)">
-      {otherProjects.map((project) => (
+      {infraProjects.map((project) => (
         <ProjectCard
           slug={project.id}
           name={project.data.name}
